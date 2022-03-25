@@ -4,3 +4,6 @@ let screenPrice;
 let rollback;
 let fullPrice;
 let adaptive;
+
+console.log('lesson01')
+alert('Добрый день')
