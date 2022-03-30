@@ -11,14 +11,26 @@ let rollback = 30;
 const percentageOfRollback = fullPrice * (rollback/100);
 let servicePercentPrice = fullPrice - percentageOfRollback;
 
-console.log(Math.ceil(servicePercentPrice));
+const showTypeOf = function(variable) {
+    console.log(variable, typeof variable);
+};
 
-if (fullPrice > 30000) {
-    alert('Даем скидку в 10%');
-} else if (fullPrice < 30000 && fullPrice > 15000) {
-    alert('Даем скидку в 5%');
-} else if (fullPrice < 15000 && fullPrice > 0) {
-    alert('Скидка не предусмотрена');
-}  else {
-    alert('Что то пошло не так');
-}
+const getRollbackMessqage = function(price) {
+    if (fullPrice > 30000) {
+        return 'Даем скидку в 10%';
+    } else if (price < 30000 && price > 15000) {
+        return 'Даем скидку в 5%';
+    } else if (price < 15000 && price > 0) {
+        return 'Скидка не предусмотрена';
+    }  else {
+        return 'Что то пошло не так';
+    }
+};
+
+
+showTypeOf(title);
+showTypeOf(screenPrice);
+showTypeOf(adaptive);
+
+console.log(getRollbackMessqage(fullPrice));
+console.log(Math.ceil(servicePercentPrice));
