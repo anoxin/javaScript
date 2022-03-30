@@ -15,9 +15,10 @@ const showTypeOf = function(variable) {
 
 function getTitle(newTitle, startSymbol) {
     if (newTitle[0] == ' ') {
+        newTitle = newTitle.trim();
         newTitle = newTitle.toLowerCase();
-        startSymbol = newTitle.substring(2);
-        newTitle = newTitle[1].toUpperCase() + startSymbol;
+        startSymbol = newTitle.substring(1);
+        newTitle = newTitle[0].toUpperCase() + startSymbol;
         return newTitle;
     } else {
         newTitle = newTitle.toLowerCase();
