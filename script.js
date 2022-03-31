@@ -95,7 +95,7 @@ showTypeOf(title);
 showTypeOf(screenPrice);
 showTypeOf(adaptive);
 
-console.log('allServicePrices', allServicePrices);
+console.log('allServicePrices', allServicePrices, typeof allServicePrices);
 
 console.log(getRollbackMessqage(fullPrice));
 
