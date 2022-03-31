@@ -2,15 +2,31 @@ let title =  prompt('Как называется ваш проект?');
 let screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные');
 let screenPrice = prompt('Сколько будет стоить данная работа?', '12000 рублей');
 let adaptive = confirm('Нужен ли адаптив на сайте?');
+
 let service1 = prompt('Какой дополнительный тип услуги нужен?', 'servicePrice1');
 let servicePrice1 = prompt('Сколько это будет стоить?', '1000 рублей');
 let service2 = prompt('Какой дополнительный тип услуги нужен?', 'servicePrice2');
 let servicePrice2 = prompt('Сколько это будет стоить?', '1500 рублей');
+
 let rollback = 30;
 let fullPrice, allServicePrices, servicePercentPrice, percentageOfRollback;
 
+const getAllServicePrices = function () {
+    return servicePrice1 + servicePrice2;
+
+};
+
 const showTypeOf = function(variable) {
     console.log(variable, typeof variable);
+};
+
+function getFullPrice() {
+    return screenPrice + allServicePrices;
+}
+
+const getServicePercentPrices = function () {
+    return fullPrice - percentageOfRollback;
+
 };
 
 function getTitle(newTitle, startSymbol) {
@@ -38,20 +54,6 @@ const getRollbackMessqage = function(price) {
     }  else {
         return 'Что то пошло не так';
     }
-};
-
-const getAllServicePrices = function () {
-    return servicePrice1 + servicePrice2;
-
-};
-
-function getFullPrice() {
-    return screenPrice + allServicePrices;
-}
-
-const getServicePercentPrices = function () {
-    return fullPrice - percentageOfRollback;
-
 };
 
 screenPrice = parseFloat(screenPrice);
