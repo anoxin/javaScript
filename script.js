@@ -58,7 +58,7 @@ const appData = {
         }
         while(!appData.isNumber(price));
 
-        appData.services[name] = +price; //воспользоваться итератором
+        appData.services[name] = +price;
       
     }   
     appData.adaptive = confirm('Нужен ли адаптив на сайте?');
@@ -66,9 +66,14 @@ const appData = {
   },
 
   addPrices: function() {
-    for (let screen of appData.screens) {
-      appData.screenPrice += +screen.price;
-    }
+    
+    // for (let screen of appData.screens) {
+    //   appData.screenPrice += +screen.price;
+    // }
+
+    appData.screenPrice = appData.screens.reduce(function(sum, item) {
+      return sum += +item.price;
+    }, 0);
 
     for(let key in appData.servise) {
       appData.allServicePrices += appData.services[key];
