@@ -1,6 +1,33 @@
 'use strinct';
 
-const appData = {
+//1
+console.log(document.getElementsByTagName('h1')[0]);
+//2
+console.log(document.getElementsByClassName('handler_btn')[0]);
+console.log(document.getElementsByClassName('handler_btn')[1]);
+//3
+console.log(document.querySelector('.screen-btn')); 
+//4
+let percent = document.querySelectorAll('.other-items.percent');
+let number = document.querySelectorAll('.other-items.number');
+console.log(percent);
+console.log(number);
+//5
+let rollback = document.querySelector('.rollback');
+console.log(rollback.querySelector('input[type="range"]'));
+//6
+console.log(rollback.querySelector('span.range-value'));
+//7
+let total = document.getElementsByClassName('total-input');
+for (let i = 0; i < total.length; i++) {
+  console.log(total[i]);
+}
+//8
+let myScreen = document.querySelectorAll('.screen');
+console.log(myScreen);
+
+
+/* const appData = {
   title: '',
   screens: [],
   screenPrice: 0,
@@ -114,4 +141,4 @@ getTitle: function (newTitle, startSymbol) {
 };
 
 appData.start();
-console.log(appData.services);
+console.log(appData.services); */
