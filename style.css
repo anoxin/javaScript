@@ -1,12 +1,6 @@
-div.container {
-    margin-left: 15em;
-    height: 20em;
-    position: relative }              
- div.container p {
+ p {
+     margin-top: 4em;
     text-align: center;
-    font-size: 30px;
-    position: absolute;               
-    top: 50%;                         
-    transform: translate(0, -50%) 
+    font-size: 30px; 
 }
 
