@@ -21,9 +21,16 @@ const totalCountRollback = document.getElementsByClassName('total-input')[4];
 
 const range = document.querySelector('.rollback input[type="range"]');
 const span = document.querySelector('span.range-value');
+const customCheckbox = document.querySelector('[for="cms-open"]');
+const customCheckbox2 = document.querySelector('.custom-checkbox');
+const cmsSelect = document.getElementById('cms-select');
+const cmsInput = document.querySelector('input#cms-other-input');
 
 let screens = document.querySelectorAll('.screen');
 let sumClickPluse = 0;
+let cmsIndex = 0;
+let cmsValue = 0;
+let inputIndex;
 
 const appData = {
   title: '',
@@ -36,6 +43,7 @@ const appData = {
   servicePricesPercent: 0,
   servicePricesNumber: 0,
   servicePercentPrice: 0,
+  showCms: true,
   servicesPercent: {},
   servicesNumber: {},
   init: function () {
@@ -44,6 +52,10 @@ const appData = {
     startBtn.addEventListener('click', this.selectValue);
     resetBtn.addEventListener('click', this.reset);
     range.addEventListener('input', this.spanRange);
+    customCheckbox.addEventListener('click', this.showElem);
+    cmsSelect.addEventListener('click', this.clickSelest);
+    cmsInput.addEventListener('input', this.clickSelest);
+    
   },
   addTitle: function () {
     document.title = title.textContent;
@@ -53,7 +65,7 @@ const appData = {
     this.addServices();
     this.addPrices();
 
-    this.logger();
+    // this.logger();
     this.showResult(); 
     this.default();
   },
@@ -65,40 +77,44 @@ const appData = {
 
   selectValue: function () {
     let stop = false;
+
     for (let i = 0; i <= sumClickPluse; i++) {
       let numSelect = +document.querySelectorAll('select')[i].value;
       let numInput = +document.querySelectorAll('input')[i].value;
-      if (numSelect == 0 || numInput == 0) {
+      if (numSelect == 0 || numInput == 0 || isNaN(numInput) || isNaN(cmsValue)) {
         stop = true;
       }
     }
     if (stop == false) {
+      buttonPluse.setAttribute('disabled', '');
+      range.setAttribute('disabled', '');
+      cmsInput.setAttribute('disabled', '');
+      document.querySelector('input[type="text"]').setAttribute('disabled', '');
+  
+      document.querySelectorAll('select[name="views-select"]').forEach(function(item, i, arr) {
+        document.querySelectorAll('select[name="views-select"]')[i].setAttribute('disabled', '');
+      });
+  
+      let newObj = document.querySelectorAll('.new_obj');
+  
+      newObj.forEach(function(item, n, arr) {
+        newObj[n].querySelectorAll('input[type="text"]').forEach(function(item, i, arr) {
+          newObj[n].querySelectorAll('input[type="text"]')[i].setAttribute('disabled', '');
+        }); 
+      });
+  
+      document.querySelectorAll('.custom-checkbox').forEach(function(item, i, arr) {
+        document.querySelectorAll('.custom-checkbox')[i].setAttribute('disabled', '');
+      });
+
+      startBtn.style.display = "none";
+      resetBtn.style.display = "inline-block"; 
+      cmsIndex = 1;
+
       appData.start();
-    }  
-  
-    buttonPluse.setAttribute('disabled', '');
-    range.setAttribute('disabled', '');
-    document.querySelector('input[type="text"]').setAttribute('disabled', '');
+    } 
 
-    document.querySelectorAll('select[name="views-select"]').forEach(function(item, i, arr) {
-      document.querySelectorAll('select[name="views-select"]')[i].setAttribute('disabled', '');
-    });
-
-    let newObj = document.querySelectorAll('.new_obj');
-
-    newObj.forEach(function(item, n, arr) {
-      newObj[n].querySelectorAll('input[type="text"]').forEach(function(item, i, arr) {
-        newObj[n].querySelectorAll('input[type="text"]')[i].setAttribute('disabled', '');
-      }); 
-    });
-
-    document.querySelectorAll('.custom-checkbox').forEach(function(item, i, arr) {
-      document.querySelectorAll('.custom-checkbox')[i].setAttribute('disabled', '');
-    });
-  
-    startBtn.style.display = "none";
-    resetBtn.style.display = "inline-block"; 
-    appData.start();
+    appData.clickSelest();
 
   },
 
@@ -106,6 +122,7 @@ const appData = {
 
     buttonPluse.removeAttribute('disabled');
     range.removeAttribute('disabled');
+    cmsInput.removeAttribute('disabled');
     document.querySelector('input[type="text"]').removeAttribute('disabled');
 
     document.querySelectorAll('select[name="views-select"]').forEach(function(item, i, arr) {
@@ -125,8 +142,50 @@ const appData = {
     resetBtn.style.display = "none"; 
     startBtn.style.display = "inline-block";
 
+    cmsIndex = 0;
+    document.getElementById('cms-select').value = "";
+  
+    appData.clickSelest();
+    document.querySelectorAll('.main-controls__input')[inputIndex].style.display = "none";
     appData.start();
     appData.defaultValue();
+
+  },
+
+  showElem: function () {
+    let cms = document.querySelector('.hidden-cms-variants').style.display;
+    if (cms == "none" && cmsIndex == 0) {
+      document.querySelector('.hidden-cms-variants').style.display = "flex";
+      this.showCms = true;
+    } else if (cms !== "none" && cmsIndex == 0) {
+      document.querySelector('.hidden-cms-variants').style.display = "none";
+      this.showCms = false;
+    }  
+  },
+
+  clickSelest: function () {
+       
+    let mainControlsInput = document.querySelectorAll('.main-controls__input');
+    
+    
+    for (let i = 0; i < mainControlsInput.length; i++) {
+      let searchIndex = mainControlsInput[i].querySelector('input#cms-other-input');
+      if (searchIndex) {
+        inputIndex = i;
+      }
+    }
+
+    if (cmsSelect.value == "other") {
+      document.querySelectorAll('.main-controls__input')[inputIndex].style.display = "flex";
+      cmsValue = +document.getElementById('cms-other-input').value;
+    } else if (cmsSelect.value == "50") {
+      document.querySelectorAll('.main-controls__input')[inputIndex].style.display = "none";
+      cmsValue = 50;
+      
+    } else {
+      document.querySelectorAll('.main-controls__input')[inputIndex].style.display = "none";
+      cmsValue = 0;
+    }
 
   },
 
@@ -203,6 +262,9 @@ const appData = {
       this.servicePricesPercent += this.screenPrice * (this.servicesPercent[key]/100);
     }
     this.fullPrice = this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
+    if (this.showCms == true) {
+      this.fullPrice = this.fullPrice + this.fullPrice/100 * cmsValue;
+    }
     this.servicePercentPrice = this.fullPrice - this.fullPrice * (this.rollback/100);
   },
 
@@ -229,13 +291,14 @@ const appData = {
     totalCountRollback.value = 0;
     totalCount.value = 0;
     sumClickPluse = 0;
+    cmsValue = 0;
   },
 
-  logger: function () {
-    console.log(this.fullPrice);
-    console.log(this.servicePercentPrice);
-    console.log(this.screens);
-  }
+  // logger: function () {
+  //   console.log(this.fullPrice);
+  //   console.log(this.servicePercentPrice);
+  //   console.log(this.screens);
+  // }
 };
 
 appData.init();
