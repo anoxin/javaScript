@@ -16,12 +16,14 @@ for (let i = 0; i < 7; i++) {
 let number = 100;
 
 for (let i = 2; i <= number; i++) {
+  let n = 2;
   let v;
-  for (let n = 2; n < i; n++) { 
+  while (n < i) {
     if (i % n == 0) {
-      v = i;
-      break;
+        v = i;
+        break;
     }
+    n++;
   }
   if (i != v) {
     console.log(i, 'Делители этого числа: 1 и ' + i);
