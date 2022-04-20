@@ -3,7 +3,7 @@ let newAnswert;
 
 const newMessage = function (message) {
     if (typeof message == 'string') {
-        return message;
+        return message.trim();
     } else {
         return 'В качестве аргумента передана не строка';
     }
@@ -13,9 +13,9 @@ const newMessage = function (message) {
 newAnswert = newMessage(myMessage);
 
 if (newAnswert == 'В качестве аргумента передана не строка') {
-} else if (newAnswert.length > 30) {
+} else if (newAnswert.length > 30) { 
     newAnswert = newAnswert.substr(0, 30) + '...';
   }
 
 
-alert(newAnswert.trim());
+alert(newAnswert);
