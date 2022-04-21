@@ -25,9 +25,6 @@ const span = document.querySelector('span.range-value');
 let screens = document.querySelectorAll('.screen');
 let sumClickPluse = 0;
 
-
-
-
 const appData = {
   title: '',
   screens: [],
@@ -126,8 +123,10 @@ const appData = {
   },
 
   addScreenBlock: function () {
+    screens = document.querySelectorAll('.screen');
     const cloneScreen = screens[0].cloneNode(true);
-
+    cloneScreen.querySelector('input').value = '';
+  
     screens[screens.length - 1].after(cloneScreen);
     sumClickPluse++;
   },
