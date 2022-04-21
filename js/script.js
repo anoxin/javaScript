@@ -60,6 +60,8 @@ const appData = {
   spanRange: function (event) {
     span.textContent = event.target.value + '%';
     appData.rollback = +event.target.value;
+    appData.servicePercentPrice = appData.fullPrice - appData.fullPrice * (appData.rollback/100);
+    totalCountRollback.value = appData.servicePercentPrice;
   },
 
   selectValue: function () {
@@ -151,6 +153,7 @@ const appData = {
     }
     appData.fullPrice = appData.screenPrice + appData.servicePricesNumber + appData.servicePricesPercent;
     appData.servicePercentPrice = appData.fullPrice - appData.fullPrice * (appData.rollback/100);
+  
   },
 
   default: function () {
@@ -159,7 +162,7 @@ const appData = {
     appData.screenPrice = 0;
     appData.screenNumber = 0;
     appData.adaptive = true;
-    appData.fullPrice = 0;
+    // appData.fullPrice = 0;
     appData.servicePricesPercent = 0;
     appData.servicePricesNumber = 0;
     appData.servicePercentPrice = 0;
