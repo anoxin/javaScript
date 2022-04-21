@@ -1,76 +1,48 @@
-const myTime = document.getElementById("time");
-
-let start = function () {
+let correctsAndShowsTheTime = function () {
     const myTime = new Date();
-    const week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-    const myMonth = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 
-    'Октября', 'Ноября', 'Декабря'];
-    let textHours = 'час';
-    let textMinutes = 'минут';
-    let textSecond = 'секунд';
-
-    let dayIndex = myTime.getDay() + 6;
-    let date = myTime.getDate();
-    let month = myTime.getMonth();
-    let year = myTime.getFullYear();
-    let hours = myTime.getHours();
+    let date = myTime.toLocaleDateString("ru", {weekday: "long", year: "numeric", month: "long", day: "numeric"});
     let minutes = myTime.getMinutes();
-    let second = myTime.getSeconds();
-    let month2 = myMonth[month];
     
-    let funcData = function () {
-    if (hours == 0 || (hours > 4 && hours < 21)) {
-            textHours = textHours + 'ов';
+    let correctsWordEndings = function (num, array) {
+        num = +(num + '').substr(-2);
+        if (num == 0 || (num > 4 && num < 21)) {
+            return `${num} ${array[2]}`;
         }
-        if ((hours > 1 && hours < 5) || (hours > 21 && hours < 24)) {
-            textHours = textHours + 'а';
-        }
-        
-        
-        if (minutes == 1 || minutes == 21 || minutes == 31 || minutes == 41 || minutes == 51) {
-            textMinutes = textMinutes + 'а';
-        }
-        if ((minutes > 1 && minutes < 5) || (minutes > 21 && minutes < 25) ||
-        (minutes > 31 && minutes < 35)  || (minutes > 41 && minutes < 45)  || (minutes > 51 && minutes < 55)) {
-            textMinutes = textMinutes + 'ы';
-        }
-        
-        if (second == 1 || second == 21 || second == 31 || second == 41 || second == 51) {
-            textSecond = textSecond + 'а';
-        }
-        if ((second > 1 && second < 5) || (second> 21 && second < 25) ||
-        (second > 31 && second < 35)  || (second > 41 && second < 45)  || (second > 51 && second < 55)) {
-            textSecond = textSecond + 'ы';
+        else if ((num > 1 && num < 5) || (minutes > 21 && minutes < 25) ||
+        (num > 31 && num < 35)  || (num > 41 && num < 45)  || (num > 51 && num < 55) ||
+        (num > 61 && num < 65)  || (num > 71 && num < 75)  || (num > 81 && num < 85) || (num > 91 && num < 95)) {
+            return `${num} ${array[1]}`;
+        } 
+        else  if (num == 1 || num == 21 || num == 31 || num == 41 || num == 51 || num == 61 ||
+          num == 71 || num == 81 || num == 91) {
+            return `${num} ${array[0]}`;
+        } else {
+            return `${num} ${array[2]}`;
         }
     
     };
-    let funcData2 = function (el) {
+
+    let addsZero  = function (el) {
         if (el.toString().length < 2) {
             el = '0' + el; 
         }
         return el;
     };
-    let myDay = function (el) {
-        if (el > 6) {
-            el = el - 7;
-        }
-        return el;
-    };
     
-    funcData();
+    let typeOfTime1 = 'Сегодня ' + `${date.toUpperCase()[0]}${date.slice(1, -1)}ода` +
+    ' ' + `${
+        correctsWordEndings(myTime.getHours(), ['час', 'часа', 'часов'])
+      } ${
+        correctsWordEndings(myTime.getMinutes(), ['минута', 'минуты', 'минут'])
+      } ${
+        correctsWordEndings(myTime.getSeconds(), ['секунда', 'секунды', 'секунд'])
+      }`;
     
-    let time = 'Сегодня ' + week[myDay(dayIndex)] + ', ' + date + ' ' + month2 + ' ' + year + 
-    ' года, ' + hours + ' ' + textHours + ' ' + minutes + ' ' + textMinutes + ' ' + second + ' ' + textSecond;
-    
-    let time2 = funcData2(date) + '.' + funcData2(month) + '.' + funcData2(year) + 
-    ' - ' + funcData2(hours) + ':' + funcData2(minutes) + ':' + funcData2(second);
+    let typeOfTime2 = myTime.toLocaleDateString("ru", {year:"numeric", month:"numeric", day: "numeric"}) + 
+    ' - ' + myTime.toLocaleTimeString("ru", {hour: "numeric", minute: "numeric", second: "numeric"});
 
-    // let dev = 
-
-    // myTime.textContent = dev;
-
-    return `${time}` + ' \n ' +  `${time2}`;
+    return `${typeOfTime1}` + ' \n ' +  `${typeOfTime2}`;
 };
 
-let timerId = setInterval(() => myTime.innerText = start(), 1000);
+setInterval(() => document.getElementById("time").innerText = correctsAndShowsTheTime(), 1000);
 
