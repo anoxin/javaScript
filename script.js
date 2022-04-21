@@ -1,21 +1,13 @@
-let myMessage = prompt('Введите сообщение', 'Моё сообщение!');
-let newAnswert;
-
 const newMessage = function (message) {
+    let newAnswert;
     if (typeof message == 'string') {
-        return message.trim();
+        message = message.trim();
+        if (message.length > 30) { 
+            message = message.substr(0, 30) + '...';
+        }
+        return alert(message);
     } else {
-        return 'В качестве аргумента передана не строка';
+        return alert('В качестве аргумента передана не строка');
     }
 };
-
-
-newAnswert = newMessage(myMessage);
-
-if (newAnswert == 'В качестве аргумента передана не строка') {
-} else if (newAnswert.length > 30) { 
-    newAnswert = newAnswert.substr(0, 30) + '...';
-  }
-
-
-alert(newAnswert);
+newMessage(prompt('Введите сообщение', 'Моё сообщение!'));
