@@ -22,7 +22,7 @@ const totalCountRollback = document.getElementsByClassName('total-input')[4];
 const range = document.querySelector('.rollback input[type="range"]');
 const span = document.querySelector('span.range-value');
 
-let screens = document.querySelectorAll('.screen');
+let screens = document.getElementsByClassName('screen');
 let sumClickPluse = 0;
 
 const appData = {
@@ -52,7 +52,6 @@ const appData = {
     appData.addServices();
     appData.addPrices();
 
-    // appData.logger();
     appData.showResult(); 
     appData.default();
   },
@@ -87,9 +86,7 @@ const appData = {
 
   },
   addScreens: function () {
-    screens = document.querySelectorAll('.screen');
-
-    screens.forEach(function (screen, index) {
+    Array.prototype.forEach.call(screens, function(screen, index) {
       const select = screen.querySelector('select');
       const input = screen.querySelector('input');
       const selectName = select.options[select.selectedIndex].textContent;
@@ -99,6 +96,7 @@ const appData = {
          price: +select.value * +input.value,
          count: +input.value
       });
+      
     });
   },
   addServices: function () {
@@ -125,7 +123,6 @@ const appData = {
   },
 
   addScreenBlock: function () {
-    screens = document.querySelectorAll('.screen');
     const cloneScreen = screens[0].cloneNode(true);
     cloneScreen.querySelector('input').value = '';
   
@@ -162,7 +159,6 @@ const appData = {
     appData.screenPrice = 0;
     appData.screenNumber = 0;
     appData.adaptive = true;
-    // appData.fullPrice = 0;
     appData.servicePricesPercent = 0;
     appData.servicePricesNumber = 0;
     appData.servicePercentPrice = 0;
