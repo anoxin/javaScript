@@ -65,7 +65,6 @@ const appData = {
     this.addServices();
     this.addPrices();
 
-    // this.logger();
     this.showResult(); 
     this.default();
   },
@@ -294,11 +293,6 @@ const appData = {
     cmsValue = 0;
   },
 
-  // logger: function () {
-  //   console.log(this.fullPrice);
-  //   console.log(this.servicePercentPrice);
-  //   console.log(this.screens);
-  // }
 };
 
 appData.init();
