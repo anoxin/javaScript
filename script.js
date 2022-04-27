@@ -20,7 +20,7 @@ const appData = {
     appData.logger();
   },
   isNumber: function (num) {
-    return !isNaN(parseFloat(num)) && isFinite(num);
+    return !isNaN(parseFloat(num)) && isFinite(num) && num == num.trim();
   },
 
   isString: function (str) {
@@ -67,10 +67,6 @@ const appData = {
 
   addPrices: function() {
     
-    // for (let screen of appData.screens) {
-    //   appData.screenPrice += +screen.price;
-    // }
-
     appData.screenPrice = appData.screens.reduce(function(sum, item) {
       return sum += +item.price;
     }, 0);
