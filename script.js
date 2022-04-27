@@ -26,9 +26,8 @@ const appData = {
   service2: '',
 
   isNumber: function (num) {
-    return !isNaN(parseFloat(num)) && isFinite(num);
+    return !isNaN(parseFloat(num)) && isFinite(num) && num == num.trim();
   },
-
   asking: function () {
     appData.title =  prompt('Как называется ваш проект?', 'Калькулятор верстки');
     appData.screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные');
@@ -39,7 +38,6 @@ const appData = {
     appData.adaptive = confirm('Нужен ли адаптив на сайте?');
     appData.screenPrice = +appData.screenPrice;
   },
-
   getAllServicePrices: function () {
     let sum = 0;
     let answer;
@@ -99,9 +97,6 @@ getTitle: function (newTitle, startSymbol) {
   },
 
   logger: function () {
-    // console.log(appData.fullPrice);
-    // console.log(appData.servicePercentPrice);
-
     for (let key in appData) {
       console.log( key + ': ' + appData[key]);
     }
