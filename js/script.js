@@ -26,7 +26,7 @@ const customCheckbox2 = document.querySelector('.custom-checkbox');
 const cmsSelect = document.getElementById('cms-select');
 const cmsInput = document.querySelector('input#cms-other-input');
 
-let screens = document.querySelectorAll('.screen');
+let screens = document.getElementsByClassName('screen');
 let sumClickPluse = 0;
 let cmsIndex = 0;
 let cmsValue = 0;
@@ -72,6 +72,8 @@ const appData = {
   spanRange: function (event) {
     span.textContent = event.target.value + '%';
     appData.rollback = +event.target.value;
+    appData.servicePercentPrice = appData.fullPrice - appData.fullPrice * (appData.rollback/100);
+    totalCountRollback.value = appData.servicePercentPrice;
   },
 
   selectValue: function () {
@@ -86,7 +88,7 @@ const appData = {
     }
     if (stop == false) {
       buttonPluse.setAttribute('disabled', '');
-      range.setAttribute('disabled', '');
+
       cmsInput.setAttribute('disabled', '');
       document.querySelector('input[type="text"]').setAttribute('disabled', '');
   
@@ -197,19 +199,19 @@ const appData = {
 
   },
   addScreens: function () {
-    screens = document.querySelectorAll('.screen');
-
-    screens.forEach((screen, index) => {
+    Array.prototype.forEach.call(screens, function(screen, index) {
       const select = screen.querySelector('select');
       const input = screen.querySelector('input');
       const selectName = select.options[select.selectedIndex].textContent;
-      this.screens.push({
+      appData.screens.push({
          id: index,
          name: selectName,
          price: +select.value * +input.value,
          count: +input.value
       });
+      
     });
+
   },
   addServices: function () {
     otherItemsPercent.forEach((item) => {
@@ -236,6 +238,7 @@ const appData = {
 
   addScreenBlock: function () {
     const cloneScreen = screens[0].cloneNode(true);
+    cloneScreen.querySelector('input').value = '';
     cloneScreen.classList.add('new_obj'); 
 
     screens[screens.length - 1].after(cloneScreen);
@@ -273,7 +276,7 @@ const appData = {
     this.screenPrice = 0;
     this.screenNumber = 0;
     this.adaptive = true;
-    this.fullPrice = 0;
+    // this.fullPrice = 0;
     this.servicePricesPercent = 0;
     this.servicePricesNumber = 0;
     this.servicePercentPrice = 0;
