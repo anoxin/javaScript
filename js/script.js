@@ -49,9 +49,9 @@ const appData = {
   init: function () {
     this.addTitle(); 
     buttonPluse.addEventListener('click', this.addScreenBlock);
-    startBtn.addEventListener('click', this.selectValue);
-    resetBtn.addEventListener('click', this.reset);
-    range.addEventListener('input', this.spanRange);
+    startBtn.addEventListener('click', this.selectValue.bind(this));
+    resetBtn.addEventListener('click', this.reset.bind(this));
+    range.addEventListener('input', this.spanRange.bind(this));
     customCheckbox.addEventListener('click', this.showElem);
     cmsSelect.addEventListener('click', this.clickSelest);
     cmsInput.addEventListener('input', this.clickSelest);
@@ -71,9 +71,9 @@ const appData = {
 
   spanRange: function (event) {
     span.textContent = event.target.value + '%';
-    appData.rollback = +event.target.value;
-    appData.servicePercentPrice = appData.fullPrice - appData.fullPrice * (appData.rollback/100);
-    totalCountRollback.value = appData.servicePercentPrice;
+    this.rollback = +event.target.value;
+    this.servicePercentPrice = this.fullPrice - this.fullPrice * (this.rollback/100);
+    totalCountRollback.value = this.servicePercentPrice;
   },
 
   selectValue: function () {
@@ -112,10 +112,10 @@ const appData = {
       resetBtn.style.display = "inline-block"; 
       cmsIndex = 1;
 
-      appData.start();
+      this.start();
     } 
 
-    appData.clickSelest();
+    this.clickSelest();
 
   },
 
@@ -146,10 +146,10 @@ const appData = {
     cmsIndex = 0;
     document.getElementById('cms-select').value = "";
   
-    appData.clickSelest();
+    this.clickSelest();
     document.querySelectorAll('.main-controls__input')[inputIndex].style.display = "none";
-    appData.start();
-    appData.defaultValue();
+    this.start();
+    this.defaultValue();
 
   },
 
@@ -199,11 +199,11 @@ const appData = {
 
   },
   addScreens: function () {
-    Array.prototype.forEach.call(screens, function(screen, index) {
+    Array.prototype.forEach.call(screens, (screen, index) => {
       const select = screen.querySelector('select');
       const input = screen.querySelector('input');
       const selectName = select.options[select.selectedIndex].textContent;
-      appData.screens.push({
+      this.screens.push({
          id: index,
          name: selectName,
          price: +select.value * +input.value,
