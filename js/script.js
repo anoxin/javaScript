@@ -22,7 +22,7 @@ const totalCountRollback = document.getElementsByClassName('total-input')[4];
 const range = document.querySelector('.rollback input[type="range"]');
 const span = document.querySelector('span.range-value');
 const customCheckbox = document.querySelector('[for="cms-open"]');
-const customCheckbox2 = document.querySelector('.custom-checkbox');
+const customCheckbox2 = document.querySelectorAll('.custom-checkbox');
 const cmsSelect = document.getElementById('cms-select');
 const cmsInput = document.querySelector('input#cms-other-input');
 
@@ -73,7 +73,10 @@ const appData = {
     span.textContent = event.target.value + '%';
     this.rollback = +event.target.value;
     this.servicePercentPrice = this.fullPrice - this.fullPrice * (this.rollback/100);
-    totalCountRollback.value = this.servicePercentPrice;
+    if(resetBtn.style.display == "inline-block") {
+      return;
+    }
+    totalCountRollback.value = Math.ceil(this.servicePercentPrice);
   },
 
   selectValue: function () {
@@ -145,6 +148,14 @@ const appData = {
 
     cmsIndex = 0;
     document.getElementById('cms-select').value = "";
+    document.querySelector('select[name="views-select"]').value = 0;
+    document.querySelector('input[type="text"]').value = '';
+    document.querySelector('.hidden-cms-variants').style.display = "none";
+    customCheckbox2.forEach((check) => {
+      check.checked = false;
+    });
+    range.value = 0;
+    span.textContent = 0 + '%';
   
     this.clickSelest();
     document.querySelectorAll('.main-controls__input')[inputIndex].style.display = "none";
@@ -194,7 +205,7 @@ const appData = {
     total.value = this.screenPrice;
     totalCountOther.value = this.servicePricesPercent + this.servicePricesNumber;
     fullTotalCount.value = this.fullPrice;
-    totalCountRollback.value = this.servicePercentPrice;
+    totalCountRollback.value = Math.ceil(this.servicePercentPrice);
     totalCount.value = this.screenNumber;
 
   },
@@ -276,7 +287,7 @@ const appData = {
     this.screenPrice = 0;
     this.screenNumber = 0;
     this.adaptive = true;
-    // this.fullPrice = 0;
+    this.fullPrice = 0;
     this.servicePricesPercent = 0;
     this.servicePricesNumber = 0;
     this.servicePercentPrice = 0;
