@@ -91,6 +91,7 @@ const appData = {
     }
     if (stop == false) {
       buttonPluse.setAttribute('disabled', '');
+      range.setAttribute('disabled', '');
 
       cmsInput.setAttribute('disabled', '');
       document.querySelector('input[type="text"]').setAttribute('disabled', '');
@@ -288,13 +289,12 @@ const appData = {
     this.screenNumber = 0;
     this.adaptive = true;
     this.fullPrice = 0;
+    this.rollback = 0;
     this.servicePricesPercent = 0;
     this.servicePricesNumber = 0;
     this.servicePercentPrice = 0;
     this.servicesPercent = {};
-    this.servicesNumber = {};
-
-    
+    this.servicesNumber = {};  
   },
 
   defaultValue: function () {
@@ -303,6 +303,7 @@ const appData = {
     fullTotalCount.value = 0;
     totalCountRollback.value = 0;
     totalCount.value = 0;
+    cmsInput.value = '';
     sumClickPluse = 0;
     cmsValue = 0;
   },
